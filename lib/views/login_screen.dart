@@ -7,8 +7,7 @@ import 'package:room_craft/helpers.dart';
 
 import 'package:http/http.dart';
 import 'package:room_craft/views/product_list_screen.dart';
-
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -55,20 +54,37 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void login(String email, password) async {
+  login(String email, password) async {
     try {
       Response response = await post(
-          Uri.parse('https://fakestoreapi.com/auth/login'),
-          body: {'username': 'mor_2314', 'password': "83r5^_"});
+          Uri.parse('https://fakestoreapi.com/auth/login/'),
+          body: {'username': email, 'password': password});
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         print(data['token']);
-        print('Login successfully,$email');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('accessToken', '${data['token']}');
+
+        if (prefs.containsKey('accessToken')) {
+          prefs.setString('password', '${data['password']}');
+          prefs.setString('username', '${data['username']}');
+        }
+
+        print('Login successfully,${prefs.containsKey(
+          'accessToken',
+        )}');
+        print('username: ${prefs.containsKey('username')}');
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, "/second");
       } else {
         print('failed');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          'Invalid Credentials..',
+          style: TextStyle(color: bgcolor),
+        )));
+        return null;
       }
     } catch (e) {
       print(e.toString());
@@ -119,7 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       'Sign to continue',
-                      style: TextStyle(color: textBlack.withOpacity(0.6), fontSize: 20),
+                      style: TextStyle(
+                          color: textBlack.withOpacity(0.6), fontSize: 20),
                     ),
                   ),
                   Container(
@@ -133,10 +150,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusNode: _focusA,
                         controller: emailController,
                         style: TextStyle(color: themeGreen),
-                        //initialValue: email,
-                        //onChanged: (value) {
-                        //  email = value;
-                        // },
                         cursorColor: themeGreen,
                         decoration: InputDecoration(
                             icon: IconTheme(
@@ -146,17 +159,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Icon(Icons.email_outlined),
                               ),
                             ),
-                            labelText: 'Email',
+                            labelText: 'Username',
                             labelStyle:
                                 TextStyle(fontSize: 18, color: textBlack),
                             errorStyle: TextStyle(fontSize: 15),
                             border: InputBorder.none),
                         validator: (val) {
                           if (val == null || val.isEmpty) {
-                            return 'Please Fill Email';
-                          }
-                          if (!val.contains('@')) {
-                            return 'Please Enter Valid Email';
+                            return 'Please Fill Username';
                           }
                           return null;
                         },
@@ -174,10 +184,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusNode: _focusB,
                         controller: passwordController,
                         style: TextStyle(color: themeGreen),
-                        // initialValue: password,
-                        // onChanged: (value) {
-                        //   password = value;
-                        // },
                         cursorColor: themeGreen,
                         decoration: InputDecoration(
                             prefixIcon: IconTheme(
@@ -203,9 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   GestureDetector(
-                      onTap: () {
-                        
-                      },
+                      onTap: () {},
                       child: Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
@@ -228,9 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: themeGreen),
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
-                            login("morrison@gmail.com", "83r5^_");
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ProductListScreen()));
+                            login(
+                                emailController.text, passwordController.text);
                           }
                         },
                         child: Text(
@@ -245,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: RichText(
                       text: TextSpan(
-                        children:const <TextSpan>[
+                        children: const <TextSpan>[
                           TextSpan(
                               text: ' Dont have account?',
                               style: TextStyle(
@@ -261,9 +264,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ])),
           ),
         ));
   }
+
+  
 }

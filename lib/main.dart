@@ -4,27 +4,36 @@ import 'package:room_craft/helpers.dart';
 
 import 'package:room_craft/views/login_screen.dart';
 import 'package:room_craft/views/product_list_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-void main() {
-  runApp(const MyApp());
+  runApp( MyApp(prefs: prefs,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  SharedPreferences prefs;
+   MyApp({super.key,required this.prefs});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+     // title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.amber, errorColor: Colors.green),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginScreen(), //const  LoginScreen(),
-        '/second': (context) =>  const ProductListScreen(),
+        '/': (context) {
+          return prefs.getString("username") == null && prefs.getString("password") == null 
+              ? LoginScreen()
+              : ProductListScreen();
+        }, //const  LoginScreen(),
+        '/second': (context) => const ProductListScreen(),
       },
       // home:const LoginScreen()
     );

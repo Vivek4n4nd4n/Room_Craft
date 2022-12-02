@@ -165,8 +165,8 @@ class _ItemViewPageState extends State<ItemViewPage> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
+                            onPressed: () {
+               } ,  style: ElevatedButton.styleFrom(
                                 backgroundColor: bgcolor),
                             child: const Text(
                               'Add to cart',
@@ -190,8 +190,9 @@ class _ItemViewPageState extends State<ItemViewPage> {
                         ),
                       ],
                     ),
-                  )
-                ],
+                  ),
+                
+ ],
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
@@ -201,5 +202,4 @@ class _ItemViewPageState extends State<ItemViewPage> {
     );
   }
   
-
 }
