@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:room_craft/utilities/helpers.dart';
+import 'package:room_craft/views/productDetailScreen.dart';
 
 // ignore: must_be_immutable
 class FurnView extends StatefulWidget {
   String image;
   String price;
   String title;
+  String id;
   FurnView({
     Key? key,
     required this.image,
     required this.title,
     required this.price,
+    required this.id
   }) : super(key: key);
 
   @override
@@ -41,9 +44,11 @@ class _FurnViewState extends State<FurnView> {
                       child: Column(
                         children: [
                           Container(
-                              color: greycircle,
+                             
                               height: MediaQuery.of(context).size.height * 0.27,
                               width: MediaQuery.of(context).size.width * 0.4,
+                              decoration:const BoxDecoration( color: greycircle,
+                              borderRadius: BorderRadius.all(Radius.circular(10))),
                               child: Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.network(
@@ -62,7 +67,12 @@ class _FurnViewState extends State<FurnView> {
                           child: FittedBox(
                             child: FloatingActionButton(
                               heroTag: null,
-                              onPressed: () {},
+                              onPressed: () {
+
+                                   Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ItemViewPage(id: widget.id, pageTitle: '',)));
+                       
+                              },
                               child: const Icon(Icons.add),
                             ),
                           ),

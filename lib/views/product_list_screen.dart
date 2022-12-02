@@ -43,9 +43,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
               height: height * 0.10,
             ),
             Row(
-              children:const [
+              children: const [
                 Padding(
-                  padding:  EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     'Discover',
                     style: TextStyle(
@@ -54,8 +54,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         color: textBlack),
                   ),
                 ),
-                 Spacer(),
-                 Padding(
+                Spacer(),
+                Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Icon(
                     Icons.shopping_bag_outlined,
@@ -79,7 +79,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2.3;
     final double itemWidth = size.width / 2;
 
-    return SizedBox(
+    return Container(
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       height: MediaQuery.of(context).size.height,
       child: IndexedStack(
         index: index,
@@ -99,11 +101,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           print(snapshot.data![index].id.toString());
                           print(1);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ItemViewPage(id: snapshot.data![index].id,pageTitle: "",)));
+                              builder: (context) => ItemViewPage(
+                                    id: snapshot.data![index].id,
+                                    pageTitle: "",
+                                  )));
                         },
                         child: FurnView(
                             image: snapshot.data![index].image.toString(),
                             title: snapshot.data![index].title.toString(),
+                            id: snapshot.data![index].id.toString(),
                             price: snapshot.data![index].price.toString()),
                       );
                     },
@@ -111,10 +117,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                return const Center(child:  CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }),
           const Center(child: Text('Kitchan & Dining')),
-        const Center(child: Text('Home Office')),
+          const Center(child: Text('Home Office')),
           const Center(child: Text('Bed Room')),
         ],
       ),

@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  login(String email, password) async {
+  login(email, password) async {
     try {
       Response response = await post(
           Uri.parse('https://fakestoreapi.com/auth/login/'),
@@ -74,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print('Login successfully,${prefs.containsKey(
           'accessToken',
         )}');
+
         print('username: ${prefs.containsKey('username')}');
         // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, "/second");
@@ -269,6 +270,4 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
-
-  
 }

@@ -8,8 +8,6 @@ import 'package:room_craft/utilities/helpers.dart';
 
 import 'package:room_craft/model/model.dart';
 
-
-// ignore: must_be_immutable
 class ItemViewPage extends StatefulWidget {
   var id;
   String pageTitle;
@@ -24,6 +22,13 @@ class ItemViewPage extends StatefulWidget {
 
 class _ItemViewPageState extends State<ItemViewPage> {
   late Future<DataList> futureAlbum;
+  int _rating = 3;
+
+  void rate(int rating) {
+    setState(() {
+      _rating = rating;
+    });
+  }
 
   Future<DataList> fetchAlbum() async {
     final response = await http.get(
@@ -47,8 +52,7 @@ class _ItemViewPageState extends State<ItemViewPage> {
     futureAlbum = fetchAlbum();
     NotificationApi.init();
   }
-  
- 
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -82,6 +86,9 @@ class _ItemViewPageState extends State<ItemViewPage> {
                                 margin: const EdgeInsets.only(
                                     right: 20, left: 20, top: 25),
                                 height: height * 0.5,
+                                decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
                                 child: Image.network(
                                   snapshot.data!.image,
                                   fit: BoxFit.cover,
@@ -120,15 +127,10 @@ class _ItemViewPageState extends State<ItemViewPage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child:Row(
-                      children:const [
-                        Text('Rating'),
-                        RatingStar()
-                       
-                      ],
-                    )
-                  ),
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Row(
+                        children:  [const Text('Rating'), ratingStar()],
+                      )),
                   SizedBox(
                     height: height * 0.04,
                   ),
@@ -167,8 +169,8 @@ class _ItemViewPageState extends State<ItemViewPage> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: ElevatedButton(
-                            onPressed: () {
-               } ,  style: ElevatedButton.styleFrom(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
                                 backgroundColor: bgcolor),
                             child: const Text(
                               'Add to cart',
@@ -193,8 +195,7 @@ class _ItemViewPageState extends State<ItemViewPage> {
                       ],
                     ),
                   ),
-                
- ],
+                ],
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
@@ -203,5 +204,56 @@ class _ItemViewPageState extends State<ItemViewPage> {
           }),
     );
   }
-  
+  Widget ratingStar(){
+    return Container(
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              child: Icon(
+                Icons.star,
+                color:
+                    _rating >= 1 ? rating_theme : rating_theme.withOpacity(0.8),
+              ),
+              onTap: () => rate(1),
+            ),
+            GestureDetector(
+              child: Icon(
+                Icons.star,
+                color:
+                    _rating >= 2 ? rating_theme : rating_theme.withOpacity(0.7),
+              ),
+              onTap: () => rate(2),
+            ),
+            GestureDetector(
+              child: Icon(
+                Icons.star,
+                color:
+                    _rating >= 3 ? rating_theme : rating_theme.withOpacity(0.6),
+              ),
+              onTap: () => rate(3),
+            ),
+            GestureDetector(
+              child: Icon(
+                Icons.star,
+                color:
+                    _rating >= 4 ? rating_theme : rating_theme.withOpacity(0.5),
+              ),
+              onTap: () => rate(4),
+            ),
+            GestureDetector(
+              child: Icon(
+                Icons.star,
+                color:
+                    _rating >= 5 ? rating_theme : rating_theme.withOpacity(0.4),
+              ),
+              onTap: () => rate(5),
+            )
+          ],
+        ),
+      ),
+    );
+
+  }
 }
