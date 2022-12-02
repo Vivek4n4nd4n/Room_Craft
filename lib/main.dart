@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:room_craft/helpers.dart';
 
 import 'package:room_craft/views/login_screen.dart';
 import 'package:room_craft/views/product_list_screen.dart';
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 void main() {
@@ -21,11 +23,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.amber, errorColor: Colors.green),
       initialRoute: '/',
       routes: {
-        '/..': (context) => const LoginScreen(), //const  LoginScreen(),
-        '/': (context) => const ProductListScreen(),
+        '/': (context) => const LoginScreen(), //const  LoginScreen(),
+        '/second': (context) =>  const ProductListScreen(),
       },
       // home:const LoginScreen()
     );
   }
 }
-

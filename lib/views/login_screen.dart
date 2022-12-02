@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       'Sign to continue',
-                      style: TextStyle(color: textBlack, fontSize: 20),
+                      style: TextStyle(color: textBlack.withOpacity(6), fontSize: 20),
                     ),
                   ),
                   Container(

@@ -11,7 +11,7 @@ class DataList {
 
  factory DataList.fromJson(Map<String, dynamic> json) {
     return DataList(
-    image : json["category"]["image"],
+    image : json["images"][0],
     title : json['title'],
     id : json['id'],
     price : json['price'].toString(),
