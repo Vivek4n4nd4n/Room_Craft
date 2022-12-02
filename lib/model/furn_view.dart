@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:room_craft/helpers.dart';
+import 'package:room_craft/utilities/helpers.dart';
 
 // ignore: must_be_immutable
 class FurnView extends StatefulWidget {
@@ -87,7 +87,7 @@ class _FurnViewState extends State<FurnView> {
                       ),
                      // Spacer(),
                       Padding(
-                        padding:  EdgeInsets.only(right: 8,left:4 ),
+                        padding:const  EdgeInsets.only(right: 8,left:4 ),
                         child: Text('\$${widget.price}',
                             style: const TextStyle(color: textBlack,fontWeight: FontWeight.bold,fontSize: 12)),
                       )

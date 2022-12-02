@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:room_craft/api/utils.dart';
-import 'package:room_craft/helpers.dart';
+import 'package:room_craft/utilities/utils.dart';
+
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart/utils.dart';
+
 
 class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
@@ -31,14 +31,14 @@ class NotificationApi {
           importance: Importance.max,
           playSound: true,
           styleInformation:styleInformation ),
-      iOS: DarwinNotificationDetails(),
+      iOS:const DarwinNotificationDetails(),
     );
   }
 
   static Future init({bool initScheduled = false}) async {
-    final android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    final iOS = DarwinInitializationSettings();
-    final settings = InitializationSettings(android: android, iOS: iOS);
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iOS = DarwinInitializationSettings();
+    const settings = InitializationSettings(android: android, iOS: iOS);
 
 
 

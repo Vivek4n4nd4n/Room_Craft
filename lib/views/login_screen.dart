@@ -3,10 +3,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:room_craft/helpers.dart';
+import 'package:room_craft/utilities/helpers.dart';
 
 import 'package:http/http.dart';
-import 'package:room_craft/views/product_list_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {

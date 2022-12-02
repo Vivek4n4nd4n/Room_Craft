@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:room_craft/helpers.dart';
+
 
 import 'package:room_craft/views/login_screen.dart';
 import 'package:room_craft/views/product_list_screen.dart';
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) {
           return prefs.getString("username") == null && prefs.getString("password") == null 
-              ? LoginScreen()
-              : ProductListScreen();
+              ?const LoginScreen()
+              :const ProductListScreen();
         }, //const  LoginScreen(),
         '/second': (context) => const ProductListScreen(),
       },

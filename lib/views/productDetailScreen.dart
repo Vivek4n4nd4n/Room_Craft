@@ -1,13 +1,15 @@
+// ignore: file_names
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:room_craft/api/api.dart';
+import 'package:room_craft/model/api.dart';
 
-import 'package:room_craft/helpers.dart';
+import 'package:room_craft/utilities/helpers.dart';
 
 import 'package:room_craft/model/model.dart';
 
 
+// ignore: must_be_immutable
 class ItemViewPage extends StatefulWidget {
   var id;
   String pageTitle;

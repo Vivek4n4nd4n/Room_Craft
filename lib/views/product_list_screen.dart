@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:room_craft/model/furn_view.dart';
-import 'package:room_craft/helpers.dart';
+import 'package:room_craft/utilities/helpers.dart';
 import 'package:room_craft/views/productDetailScreen.dart';
 import 'package:room_craft/model/model.dart';
 import 'package:http/http.dart' as http;
