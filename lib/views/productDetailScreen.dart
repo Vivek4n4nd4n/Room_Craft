@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:room_craft/api/api.dart';
 
 import 'package:room_craft/helpers.dart';
-import 'package:room_craft/main.dart';
+
 import 'package:room_craft/model/model.dart';
-import 'package:room_craft/views/product_list_screen.dart';
+
 
 class ItemViewPage extends StatefulWidget {
   var id;
@@ -45,14 +45,7 @@ class _ItemViewPageState extends State<ItemViewPage> {
     futureAlbum = fetchAlbum();
     NotificationApi.init();
   }
-  int _rating = 3;
-
-void rate(int rating) {
   
-  setState(() {
-    _rating = rating;
-  });
-}
  
   @override
   Widget build(BuildContext context) {
@@ -127,9 +120,10 @@ void rate(int rating) {
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child:Row(
-                      children: [
+                      children:const [
                         Text('Rating'),
-                        ratingPoint(),
+                        RatingStar()
+                       
                       ],
                     )
                   ),
@@ -207,51 +201,5 @@ void rate(int rating) {
     );
   }
   
-Widget ratingPoint(){
-  return Container(
-    
-    child:Center(
-      child:  Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-           GestureDetector(
-            child:  Icon(
-              Icons.star,
-              color: _rating >= 1 ? rating_theme : rating_theme.withOpacity(0.8),
-            ),
-            onTap: () => rate(1),
-          ),
-           GestureDetector(
-            child:  Icon(
-              Icons.star,
-              color: _rating >= 2 ? rating_theme : rating_theme.withOpacity(0.7),
-            ),
-            onTap: () => rate(2),
-          ),
-           GestureDetector(
-            child:  Icon(
-              Icons.star,
-              color: _rating >= 3 ? rating_theme : rating_theme.withOpacity(0.6),
-            ),
-            onTap: () => rate(3),
-          ),
-           GestureDetector(
-            child:  Icon(
-              Icons.star,
-              color: _rating >= 4 ? rating_theme : rating_theme.withOpacity(0.5),
-            ),
-            onTap: () => rate(4),
-          ),
-           GestureDetector(
-            child:  Icon(
-              Icons.star,
-              color: _rating >= 5 ? rating_theme : rating_theme.withOpacity(0.4),
-            ),
-            onTap: () => rate(5),
-          )
-        ],
-      ),
-    ) ,
-  ) ;}
 
 }
