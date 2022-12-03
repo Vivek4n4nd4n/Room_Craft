@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:room_craft/model/furn_view.dart';
 import 'package:room_craft/utilities/helpers.dart';
 import 'package:room_craft/views/productDetailScreen.dart';
@@ -18,6 +19,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Future<List<DataList>> fetchAlbum() async {
     final response =
         await http.get(Uri.parse('https://api.escuelajs.co/api/v1/products'));
+    // await http.get(Uri.parse('https://api.unsplash.com/photos/?client_id=3vVBhd4My8TFGBJZBHjxvNxAebjIeYaORKb16kwQZNw'));
 
     if (response.statusCode == 200) {
       final List result = json.decode(response.body);
@@ -79,9 +81,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2.3;
     final double itemWidth = size.width / 2;
 
-    return Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: IndexedStack(
         index: index,
@@ -90,10 +90,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
               future: fetchAlbum(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: (itemWidth / itemHeight),
-                        crossAxisCount: 2),
+                  return MasonryGridView.builder(
+                    scrollDirection: Axis.vertical,
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 2,
+                    gridDelegate:
+                        const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(

@@ -8,13 +8,13 @@ class FurnView extends StatefulWidget {
   String price;
   String title;
   String id;
-  FurnView({
-    Key? key,
-    required this.image,
-    required this.title,
-    required this.price,
-    required this.id
-  }) : super(key: key);
+  FurnView(
+      {Key? key,
+      required this.image,
+      required this.title,
+      required this.price,
+      required this.id})
+      : super(key: key);
 
   @override
   State<FurnView> createState() => _FurnViewState();
@@ -27,14 +27,11 @@ class _FurnViewState extends State<FurnView> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return Container(
-      margin: const EdgeInsets.only(left: 10.0),
+    return Card(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: Container(
+        child: SizedBox(
             width: width * 0.5,
-            height: height * 0.6,
-            color: greycircle,
             child: Column(
               children: [
                 Stack(
@@ -44,16 +41,19 @@ class _FurnViewState extends State<FurnView> {
                       child: Column(
                         children: [
                           Container(
-                             
                               height: MediaQuery.of(context).size.height * 0.27,
                               width: MediaQuery.of(context).size.width * 0.4,
-                              decoration:const BoxDecoration( color: greycircle,
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3)),
                               child: Padding(
                                 padding: const EdgeInsets.all(3.0),
-                                child: Image.network(
-                                  widget.image,
-                                  fit: BoxFit.cover,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.network(
+                                    widget.image,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               )),
                         ],
@@ -68,10 +68,11 @@ class _FurnViewState extends State<FurnView> {
                             child: FloatingActionButton(
                               heroTag: null,
                               onPressed: () {
-
-                                   Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ItemViewPage(id: widget.id, pageTitle: '',)));
-                       
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ItemViewPage(
+                                          id: widget.id,
+                                          pageTitle: '',
+                                        )));
                               },
                               child: const Icon(Icons.add),
                             ),
@@ -79,7 +80,6 @@ class _FurnViewState extends State<FurnView> {
                         ))
                   ],
                 ),
-                
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Row(
@@ -95,11 +95,14 @@ class _FurnViewState extends State<FurnView> {
                           style: const TextStyle(color: textBlack),
                         ),
                       ),
-                     // Spacer(),
+                      // Spacer(),
                       Padding(
-                        padding:const  EdgeInsets.only(right: 8,left:4 ),
+                        padding: const EdgeInsets.only(right: 8, left: 4),
                         child: Text('\$${widget.price}',
-                            style: const TextStyle(color: textBlack,fontWeight: FontWeight.bold,fontSize: 12)),
+                            style: const TextStyle(
+                                color: textBlack,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12)),
                       )
                     ],
                   ),

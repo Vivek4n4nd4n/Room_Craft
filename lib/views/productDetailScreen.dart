@@ -86,12 +86,13 @@ class _ItemViewPageState extends State<ItemViewPage> {
                                 margin: const EdgeInsets.only(
                                     right: 20, left: 20, top: 25),
                                 height: height * 0.5,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
-                                child: Image.network(
-                                  snapshot.data!.image,
-                                  fit: BoxFit.cover,
+                                
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  child: Image.network(
+                                    snapshot.data!.image,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
